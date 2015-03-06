@@ -105,7 +105,13 @@ TPscene.prototype.display = function () {
                 0.0, 0.0, 0.0, 1.0  ];
 
     /* Show default object */
+    this.pushMatrix();
+
+    this.translate(0,5,0);
+
 	  this.obj.display();
+
+    this.popMatrix();
 
 	  // Multiplication of the previous transformations
 	  // this.multMatrix(tra);     // GT = GT * tra
