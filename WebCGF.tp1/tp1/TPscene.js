@@ -71,7 +71,8 @@ TPscene.prototype.display = function () {
 
 	  // ---- END Background, camera and axis setup
 
-    // this.cube.display();
+    this.cube.display();
+    this.translate(2,0,0);
     this.quadCube.display();
 
     this.shader.unbind();
