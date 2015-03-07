@@ -1,18 +1,18 @@
 /**
- * MyCube
+ * MyUnitCube
  * @param gl {WebGLRenderingContext}
  * @constructor
  */
-function MyCube(scene) {
+function MyUnitCube(scene) {
 	  CGFobject.call(this,scene);
 
 	  this.initBuffers();
 };
 
-MyCube.prototype = Object.create(CGFobject.prototype);
-MyCube.prototype.constructor=MyCube;
+MyUnitCube.prototype = Object.create(CGFobject.prototype);
+MyUnitCube.prototype.constructor=MyUnitCube;
 
-MyCube.prototype.initBuffers = function () {
+MyUnitCube.prototype.initBuffers = function () {
 	  this.vertices = [
             -0.5, -0.5, 0.5,
         0.5, -0.5, 0.5,
