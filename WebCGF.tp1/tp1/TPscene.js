@@ -21,8 +21,10 @@ TPscene.prototype.init = function (application) {
     this.gl.depthFunc(this.gl.LEQUAL);
 
 	  this.axis=new CGFaxis(this);
-    this.quadCube = new MyUnitCubeQuad(this);
-    this.cube = new MyUnitCube(this);
+    // this.quadCube = new MyUnitCubeQuad(this);
+    // this.cube = new MyUnitCube(this);
+    this.table = new MyTable(this);
+    this.floor = new MyFloor(this);
 
 };
 
@@ -30,7 +32,7 @@ TPscene.prototype.initLights = function () {
 
     this.shader.bind();
 
-	  this.lights[0].setPosition(15, 2, 5, 1);
+	  this.lights[0].setPosition(15, 12, 5, 1);
     this.lights[0].setDiffuse(1.0,0.5,1.0,1.0);
     this.lights[0].enable();
     this.lights[0].update();
@@ -71,9 +73,12 @@ TPscene.prototype.display = function () {
 
 	  // ---- END Background, camera and axis setup
 
-    this.cube.display();
-    this.translate(2,0,0);
-    this.quadCube.display();
+    this.floor.display();
+
+    this.pushMatrix();
+    this.translate(1,0.1,1);
+    this.table.display();
+    this.popMarix();
 
     this.shader.unbind();
 };
