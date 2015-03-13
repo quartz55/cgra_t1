@@ -1,55 +1,58 @@
 /**
  * MyUnitCubeQuad
+ * @param gl {WebGLRenderingContext}
  * @constructor
  */
- function MyUnitCubeQuad(scene) {
- 	CGFobject.call(this, scene);
+function MyUnitCubeQuad(scene) {
+	  CGFobject.call(this,scene);
+    this.quad = new MyQuad(scene);
+    this.quad.initBuffers();
+};
 
- 	this.quad = new MyQuad(this.scene);
- };
+MyUnitCubeQuad.prototype = Object.create(CGFobject.prototype);
+MyUnitCubeQuad.prototype.constructor=MyUnitCubeQuad;
 
- MyUnitCubeQuad.prototype = Object.create(CGFobject.prototype);
- MyUnitCubeQuad.prototype.constructor = MyUnitCubeQuad;
+MyUnitCubeQuad.prototype.display = function (){
 
- MyUnitCubeQuad.prototype.display = function() {
- 	// front face
- 	this.scene.pushMatrix();
- 	this.scene.translate(0, 0, 0.5);
- 	this.quad.display();
- 	this.scene.popMatrix();
+    /* Front face */
+    this.scene.pushMatrix();
+    this.scene.translate(0,0,0.5);
+    this.quad.display();
 
- 	// back face
- 	this.scene.pushMatrix();
- 	this.scene.rotate(180 * degToRad, 1, 0, 0);
- 	this.scene.translate(0, 0, 0.5);
- 	this.quad.display();
- 	this.scene.popMatrix();
+    /* Top face */
+    this.scene.popMatrix();
+    this.scene.pushMatrix();
+    this.scene.translate(0,0.5,0);
+    this.scene.rotate(-3.14/2,1,0,0);
+    this.quad.display();
 
- 	// top face
- 	this.scene.pushMatrix();
- 	this.scene.rotate(-90 * degToRad, 1, 0, 0);
- 	this.scene.translate(0, 0, 0.5);
- 	this.quad.display();
- 	this.scene.popMatrix();
+    /* Back face */
+    this.scene.popMatrix();
+    this.scene.pushMatrix();
+    this.scene.translate(0,0,-0.5);
+    this.scene.rotate(3.14,1,0,0);
+    this.quad.display();
 
- 	// back face
- 	this.scene.pushMatrix();
- 	this.scene.rotate(90 * degToRad, 1, 0, 0);
- 	this.scene.translate(0, 0, 0.5);
- 	this.quad.display();
- 	this.scene.popMatrix();
+    /* Bottom face */
+    this.scene.popMatrix();
+    this.scene.pushMatrix();
+    this.scene.translate(0,-0.5,0);
+    this.scene.rotate(3.14/2,1,0,0);
+    this.quad.display();
 
- 	// right face
- 	this.scene.pushMatrix();
- 	this.scene.rotate(-90 * degToRad, 0, 1, 0);
- 	this.scene.translate(0, 0, 0.5);
- 	this.quad.display();
- 	this.scene.popMatrix();
+    /* Right face */
+    this.scene.popMatrix();
+    this.scene.pushMatrix();
+    this.scene.translate(0.5,0,0);
+    this.scene.rotate(3.14/2,0,1,0);
+    this.quad.display();
 
- 	// left face
- 	this.scene.pushMatrix();
- 	this.scene.rotate(90 * degToRad, 0, 1, 0);
- 	this.scene.translate(0, 0, 0.5);
- 	this.quad.display();
- 	this.scene.popMatrix();
- };
+    /* Left face */
+    this.scene.popMatrix();
+    this.scene.pushMatrix();
+    this.scene.translate(-0.5,0,0);
+    this.scene.rotate(-3.14/2,0,1,0);
+    this.quad.display();
+
+    this.scene.popMatrix();
+}
