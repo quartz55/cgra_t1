@@ -52,6 +52,16 @@ LightingScene.prototype.init = function(application) {
 	  this.materialB.setSpecular(0.8,0.8,0.8,1);
 	  this.materialB.setShininess(120);
 
+    this.floorMaterial = new CGFappearance(this);
+    this.floorMaterial.setAmbient(0.25, 0.15, 0, 1);
+    this.floorMaterial.setDiffuse(0.25, 0.15, 0, 1);
+    this.floorMaterial.setSpecular(0.7, 0.7, 0.7, 1);
+
+    this.wallMaterial = new CGFappearance(this);
+    this.wallMaterial.setAmbient(0.7, 0.7, 0.7, 1);
+    this.wallMaterial.setDiffuse(0.7, 0.7, 0.7, 1);
+    this.wallMaterial.setSpecular(0.1, 0.1, 0.1, 1);
+    this.wallMaterial.setShininess(120);
 };
 
 LightingScene.prototype.initCameras = function() {
@@ -144,6 +154,8 @@ LightingScene.prototype.display = function() {
 		this.translate(7.5, 0, 7.5);
 		this.rotate(-90 * degToRad, 1, 0, 0);
 		this.scale(15, 15, 0.2);
+
+    this.floorMaterial.apply();
 		this.wall.display();
 	  this.popMatrix();
 
@@ -152,6 +164,8 @@ LightingScene.prototype.display = function() {
 		this.translate(0, 4, 7.5);
 		this.rotate(90 * degToRad, 0, 1, 0);
 		this.scale(15, 8, 0.2);
+
+    this.wallMaterial.apply();
 		this.wall.display();
 	  this.popMatrix();
 
@@ -159,6 +173,8 @@ LightingScene.prototype.display = function() {
 	  this.pushMatrix();
 		this.translate(7.5, 4, 0);
 		this.scale(15, 8, 0.2);
+
+    this.wallMaterial.apply();
 		this.wall.display();
 	  this.popMatrix();
 
