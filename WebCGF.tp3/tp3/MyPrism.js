@@ -18,39 +18,50 @@ MyPrism.prototype.initBuffers = function() {
 
     this.vertices = [];
     this.indices = [];
-    // this.normals = [];
+    this.normals = [];
 
-    const angle = 2*3.14/this.slices; /* 2*PI/nSlices */
+    const angle = (2*Math.PI)/this.slices; /* 2*PI/nSlices */
+    const numVertices = this.stacks*4;
 
-    for(i = 0; i < 2*this.slices; i++){
-        this.vertices.push(Math.cos(i*angle));
-        this.vertices.push(Math.sin(i*angle));
-        this.vertices.push(0.5);
+    Z = 0.5;
+    indice = 0;
 
-        this.vertices.push(Math.cos(i*angle));
-        this.vertices.push(Math.sin(i*angle));
-        this.vertices.push(-0.5);
+    for(s = 0; s < this.stacks; s++){
 
-        // normAngle = i*angle+angle/2;
-        // this.normals.push(Math.cos(normAngle));
-        // this.normals.push(Math.sin(normAngle));
-        // this.normals.push(0);
+        for(i = 0; i < this.slices; i++){
+            this.vertices.push(Math.cos(i*angle));
+            this.vertices.push(Math.sin(i*angle));
+            this.vertices.push(Z);
 
-        // this.normals.push(Math.cos(normAngle));
-        // this.normals.push(Math.sin(normAngle));
-        // this.normals.push(0);
-    }
+            this.vertices.push(Math.cos((i+1)*angle));
+            this.vertices.push(Math.sin((i+1)*angle));
+            this.vertices.push(Z);
 
-    for(i = 0; i < this.slices; i++){
-        v = i*2;
+            this.vertices.push(Math.cos(i*angle));
+            this.vertices.push(Math.sin(i*angle));
+            this.vertices.push(Z-1.0/this.stacks);
 
-        this.indices.push(v);
-        this.indices.push(v+1);
-        this.indices.push(v+2);
+            this.vertices.push(Math.cos((i+1)*angle));
+            this.vertices.push(Math.sin((i+1)*angle));
+            this.vertices.push(Z-1.0/this.stacks);
 
-        this.indices.push(v+2);
-        this.indices.push(v+1);
-        this.indices.push(v+3);
+            normAngle = i*angle+angle/2;
+            for(j = 0; j < 4; j++){
+                this.normals.push(Math.cos(normAngle));
+                this.normals.push(Math.sin(normAngle));
+                this.normals.push(0);
+            }
+
+            this.indices.push(indice+1);
+            this.indices.push(indice);
+            this.indices.push(indice+2);
+
+            this.indices.push(indice+1);
+            this.indices.push(indice+2);
+            this.indices.push(indice+3);
+            indice+=4;
+        }
+        Z-=1.0/this.stacks;
     }
 
  	  this.primitiveType = this.scene.gl.TRIANGLES;
