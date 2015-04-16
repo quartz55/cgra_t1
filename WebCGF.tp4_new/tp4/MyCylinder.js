@@ -5,10 +5,10 @@
 function MyCylinder(scene, slices, stacks) {
 	  CGFobject.call(this,scene);
 
-	  this.slices=slices;
+	  this.slices=slices || 8;
 	  this.stacks=stacks;
 
- 	  this.initBuffers();
+ 	  this.initBuffers() || 8;
 };
 
 MyCylinder.prototype = Object.create(CGFobject.prototype);

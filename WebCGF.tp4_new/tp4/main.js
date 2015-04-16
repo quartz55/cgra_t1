@@ -7,7 +7,7 @@ serialInclude([
 	  'LightingScene.js',
 	  'MyQuad.js',
 	  'MyUnitCubeQuad.js',
-    'MyCylingder.js',
+    'MyCylinder.js',
     'MyLamp.js',
 	  'MyTable.js',
 	  'Plane.js',

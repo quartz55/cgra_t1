@@ -36,9 +36,9 @@ LightingScene.prototype.init = function(application) {
 	  this.floor = new MyQuad(this, 0, 10, 0, 12);
 	  this.boardA = new Plane(this, BOARD_A_DIVISIONS);
 	  this.boardB = new Plane(this, BOARD_B_DIVISIONS);
+    this.collum = new MyCylinder(this, 12, 8);
 
 	  // Materials
-
 
 	  this.materialDefault = new CGFappearance(this);
 
@@ -48,10 +48,20 @@ LightingScene.prototype.init = function(application) {
     this.windowAppearance = new CGFappearance(this);
     this.windowAppearance.loadTexture("../resources/images/window.png");
     this.windowAppearance.setTextureWrap("CLAMP_TO_EDGE", "CLAMP_TO_EDGE");
-	  this.windowAppearance.setAmbient(0.3,0.3,0.3,1);
-	  this.windowAppearance.setDiffuse(0.6,0.6,0.6,1);
-	  this.windowAppearance.setSpecular(0,0.8,0.8,1);
-	  this.windowAppearance.setShininess(120);
+
+    this.slidesAppearance = new CGFappearance(this);
+    this.slidesAppearance.loadTexture("../resources/images/slides.png");
+	  this.slidesAppearance.setAmbient(0.3,0.3,0.3,1);
+	  this.slidesAppearance.setDiffuse(0.8,0.8,0.8,1);
+	  this.slidesAppearance.setSpecular(0.1,0.1,0.1,1);
+	  this.slidesAppearance.setShininess(10);
+
+    this.boardAppearance = new CGFappearance(this);
+    this.boardAppearance.loadTexture("../resources/images/board.png");
+	  this.boardAppearance.setAmbient(0.9,0.9,0.9,1);
+	  this.boardAppearance.setDiffuse(0.2,0.2,0.2,1);
+	  this.boardAppearance.setSpecular(0.5,0.5,0.5,1);
+	  this.boardAppearance.setShininess(300);
 
 	  this.materialA = new CGFappearance(this);
 	  this.materialA.setAmbient(0.3,0.3,0.3,1);
@@ -191,6 +201,22 @@ LightingScene.prototype.display = function() {
 		this.wall.display();
 	  this.popMatrix();
 
+	  // First Collum
+	  this.pushMatrix();
+		this.translate(2, 4, 14);
+		this.scale(1, 8, 1);
+		this.rotate(90*degToRad, 1, 0, 0);
+		this.collum.display();
+	  this.popMatrix();
+
+	  // Second Collum
+	  this.pushMatrix();
+		this.translate(14, 4, 14);
+		this.scale(1, 8, 1);
+		this.rotate(90*degToRad, 1, 0, 0);
+		this.collum.display();
+	  this.popMatrix();
+
 	  // First Table
 	  this.pushMatrix();
 		this.translate(2, 0, 8);
@@ -208,7 +234,7 @@ LightingScene.prototype.display = function() {
 		this.translate(4, 4.5, 0.2);
 		this.scale(BOARD_WIDTH, BOARD_HEIGHT, 1);
 
-		this.materialA.apply();
+    this.slidesAppearance.apply();
 		this.boardA.display();
 	  this.popMatrix();
 
@@ -217,7 +243,7 @@ LightingScene.prototype.display = function() {
 		this.translate(10.5, 4.5, 0.2);
 		this.scale(BOARD_WIDTH, BOARD_HEIGHT, 1);
 
-		this.materialB.apply();
+    this.boardAppearance.apply();
 		this.boardB.display();
 	  this.popMatrix();
 
