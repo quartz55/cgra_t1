@@ -26,24 +26,33 @@ LightingScene.prototype.init = function(application) {
 	  this.gl.enable(this.gl.CULL_FACE);
 	  this.gl.depthFunc(this.gl.LEQUAL);
 
+    this.enableTextures(true);
+
 	  this.axis = new CGFaxis(this);
 
 	  // Scene elements
 	  this.table = new MyTable(this);
 	  this.wall = new Plane(this);
+	  this.floor = new MyQuad(this, 0, 10, 0, 12);
 	  this.boardA = new Plane(this, BOARD_A_DIVISIONS);
 	  this.boardB = new Plane(this, BOARD_B_DIVISIONS);
 
 	  // Materials
+
+
 	  this.materialDefault = new CGFappearance(this);
+
+    this.floorAppearance = new CGFappearance(this);
+    this.floorAppearance.loadTexture("../resources/images/floor.png");
+
+    this.windowAppearance = new CGFappearance(this);
+    this.windowAppearance.loadTexture("../resources/images/window.png");
+    this.windowAppearance.setTextureWrap("CLAMP_TO_EDGE", "CLAMP_TO_EDGE");
 
 	  this.materialA = new CGFappearance(this);
 	  this.materialA.setAmbient(0.3,0.3,0.3,1);
 	  this.materialA.setDiffuse(0.6,0.6,0.6,1);
-	  // this.materialA.setSpecular(0.2,0.2,0.2,1);
-	  // this.materialA.setSpecular(0.8,0.8,0.8,1);
 	  this.materialA.setSpecular(0,0.8,0.8,1);
-	  // this.materialA.setShininess(10);
 	  this.materialA.setShininess(120);
 
 	  this.materialB = new CGFappearance(this);
@@ -75,7 +84,7 @@ LightingScene.prototype.initLights = function() {
 	  this.shader.bind();
 
 	  // Positions for four lights
-	  this.lights[0].setPosition(4, 6, 1, 1);
+	  this.lights[0].setPosition(4, 6, 7, 1);
 	  this.lights[1].setPosition(10.5, 6.0, 1.0, 1.0);
 	  this.lights[2].setPosition(10.5, 6.0, 5.0, 1.0);
 	  this.lights[3].setPosition(4, 6.0, 5.0, 1.0);
@@ -155,8 +164,8 @@ LightingScene.prototype.display = function() {
 		this.rotate(-90 * degToRad, 1, 0, 0);
 		this.scale(15, 15, 0.2);
 
-    this.floorMaterial.apply();
-		this.wall.display();
+    this.floorAppearance.apply();
+		this.floor.display();
 	  this.popMatrix();
 
 	  // Left Wall
@@ -165,8 +174,8 @@ LightingScene.prototype.display = function() {
 		this.rotate(90 * degToRad, 0, 1, 0);
 		this.scale(15, 8, 0.2);
 
-    this.wallMaterial.apply();
-		this.wall.display();
+    this.windowAppearance.apply();
+		this.floor.display();
 	  this.popMatrix();
 
 	  // Plane Wall

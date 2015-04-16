@@ -7,6 +7,13 @@ function MyTable(scene) {
 	  CGFobject.call(this,scene);
     this.cube = new MyUnitCubeQuad(scene);
 
+    this.tableAppearence = new CGFappearance(scene);
+    this.tableAppearence.loadTexture("../resources/images/table.png");
+    this.tableAppearence.setAmbient(0.4, 0.20, 0, 1);
+    this.tableAppearence.setDiffuse(0.4, 0.20, 0, 1);
+    this.tableAppearence.setSpecular(0.2, 0.2, 0.2, 1);
+    this.tableAppearence.setShininess(10);
+
 	  this.woodMaterial = new CGFappearance(scene);
     this.woodMaterial.setAmbient(0.4, 0.20, 0, 1);
     this.woodMaterial.setDiffuse(0.4, 0.20, 0, 1);
@@ -65,7 +72,8 @@ MyTable.prototype.display = function (){
     this.scene.translate(2.5,0.15+3.5,1.5);
     this.scene.scale(5,0.3,3);
 
-    this.woodMaterial.apply();
+    // this.woodMaterial.apply();
+    this.tableAppearence.apply();
     this.cube.display();
     this.scene.popMatrix();
 }
