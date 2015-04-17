@@ -1,6 +1,6 @@
 
 /** Represents a plane with nrDivs divisions along both axis, with center at (0,0) */
-function Plane(scene, nrDivs) {
+function Plane(scene, nrDivs, minS, maxS, minT, maxT) {
 	  CGFobject.call(this,scene);
 
 	  // nrDivs = 1 if not provided
@@ -9,6 +9,11 @@ function Plane(scene, nrDivs) {
 	  this.nrDivs = nrDivs;
 	  this.patchLength = 1.0 / nrDivs;
 
+    this.minS = minS || 0;
+	  this.maxS = maxS || 1;
+	  this.minT = minT || 0;
+	  this.maxT = maxT || 1;
+
 	  this.initBuffers();
 };
 
@@ -16,28 +21,31 @@ Plane.prototype = Object.create(CGFobject.prototype);
 Plane.prototype.constructor = Plane;
 
 Plane.prototype.initBuffers = function() {
-	/* example for nrDivs = 3 :
-	(numbers represent index of point in vertices array)
+	  /* example for nrDivs = 3 :
+	   (numbers represent index of point in vertices array)
 
-	        y
-        	^
-	        |
-	0    1  |  2    3
-	        |
-	 4	 5	|  6    7
-	--------|--------------> x
-	8    9  |  10  11
-	        |
-	12  13  |  14  15
+	   y
+     ^
+	   |
+	   0    1  |  2    3
+	   |
+	   4	 5	|  6    7
+	   --------|--------------> x
+	   8    9  |  10  11
+	   |
+	   12  13  |  14  15
 
-	*/
+	   */
 
 	  // Generate vertices and normals
 	  this.vertices = [];
 	  this.normals = [];
 
 	  // Uncomment below to init texCoords
-	  this.texCoords = [];
+    this.texCoords = [];
+
+	  var text_t = (this.maxT -this.minT)/this.nrDivs;
+	  var text_s = (this.maxS -this.minS)/this.nrDivs;
 
 	  var yCoord = 0.5;
 
@@ -54,23 +62,23 @@ Plane.prototype.initBuffers = function() {
 			      this.normals.push(0,0,1);
 
 			      // texCoords should be computed here; uncomment and fill the blanks
-			      this.texCoords.push(xCoord+0.5, Math.abs(yCoord-0.5));
+            this.texCoords.push(i * text_s, j * text_t);
 
 			      xCoord += this.patchLength;
 		    }
 		    yCoord -= this.patchLength;
 	  }
 
-	// Generating indices
-	/* for nrDivs = 3 output will be
-		[
-			 0,  4, 1,  5,  2,  6,  3,  7,
-			    7,  4,
-			 4,  8, 5,  9,  6, 10,  7, 11,
-			   11,  8,
-			 8, 12, 9, 13, 10, 14, 11, 15,
-		]
-	Interpreting this index list as a TRIANGLE_STRIP will draw rows of the plane (with degenerate triangles in between. */
+	  // Generating indices
+	  /* for nrDivs = 3 output will be
+		 [
+		 0,  4, 1,  5,  2,  6,  3,  7,
+		 7,  4,
+		 4,  8, 5,  9,  6, 10,  7, 11,
+		 11,  8,
+		 8, 12, 9, 13, 10, 14, 11, 15,
+		 ]
+	   Interpreting this index list as a TRIANGLE_STRIP will draw rows of the plane (with degenerate triangles in between. */
 
 	  this.indices = [];
 	  var ind=0;
