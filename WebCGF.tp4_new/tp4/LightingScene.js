@@ -63,6 +63,13 @@ LightingScene.prototype.init = function(application) {
 	  this.boardAppearance.setSpecular(0.5,0.5,0.5,1);
 	  this.boardAppearance.setShininess(300);
 
+    this.collumAppearance = new CGFappearance(this);
+    this.collumAppearance.loadTexture("../resources/images/table.png");
+    this.collumAppearance.setAmbient(0.4, 0.20, 0, 1);
+    this.collumAppearance.setDiffuse(0.4, 0.20, 0, 1);
+    this.collumAppearance.setSpecular(0.2, 0.2, 0.2, 1);
+    this.collumAppearance.setShininess(10);
+
 	  this.materialA = new CGFappearance(this);
 	  this.materialA.setAmbient(0.3,0.3,0.3,1);
 	  this.materialA.setDiffuse(0.6,0.6,0.6,1);
@@ -206,6 +213,8 @@ LightingScene.prototype.display = function() {
 		this.translate(2, 4, 14);
 		this.scale(1, 8, 1);
 		this.rotate(90*degToRad, 1, 0, 0);
+		this.rotate(180*degToRad, 0, 1, 0);
+    this.collumAppearance.apply();
 		this.collum.display();
 	  this.popMatrix();
 
@@ -214,18 +223,20 @@ LightingScene.prototype.display = function() {
 		this.translate(14, 4, 14);
 		this.scale(1, 8, 1);
 		this.rotate(90*degToRad, 1, 0, 0);
+		this.rotate(180*degToRad, 0, 1, 0);
+    this.collumAppearance.apply();
 		this.collum.display();
 	  this.popMatrix();
 
 	  // First Table
 	  this.pushMatrix();
-		this.translate(2, 0, 8);
+		this.translate(2, 0, 6);
 		this.table.display();
 	  this.popMatrix();
 
 	  // Second Table
 	  this.pushMatrix();
-		this.translate(9, 0, 8);
+		this.translate(9, 0, 6);
 		this.table.display();
 	  this.popMatrix();
 
