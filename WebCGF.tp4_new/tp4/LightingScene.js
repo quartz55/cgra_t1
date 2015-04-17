@@ -64,11 +64,10 @@ LightingScene.prototype.init = function(application) {
 	  this.boardAppearance.setShininess(300);
 
     this.collumAppearance = new CGFappearance(this);
-    this.collumAppearance.loadTexture("../resources/images/table.png");
-    this.collumAppearance.setAmbient(0.4, 0.20, 0, 1);
-    this.collumAppearance.setDiffuse(0.4, 0.20, 0, 1);
+    this.collumAppearance.loadTexture("../resources/images/collum.jpg");
+    this.collumAppearance.setDiffuse(0.8, 0.8, 0.7, 1);
     this.collumAppearance.setSpecular(0.2, 0.2, 0.2, 1);
-    this.collumAppearance.setShininess(10);
+    this.collumAppearance.setShininess(300);
 
 	  this.materialA = new CGFappearance(this);
 	  this.materialA.setAmbient(0.3,0.3,0.3,1);
