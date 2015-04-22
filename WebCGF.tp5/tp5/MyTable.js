@@ -76,4 +76,4 @@ MyTable.prototype.display = function (){
     this.tableAppearence.apply();
     this.cube.display();
     this.scene.popMatrix();
-}
+};

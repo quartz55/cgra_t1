@@ -37,10 +37,14 @@ LightingScene.prototype.init = function(application) {
 	  this.boardA = new Plane(this, BOARD_A_DIVISIONS);
 	  this.boardB = new Plane(this, BOARD_B_DIVISIONS);
     this.collum = new MyCylinder(this, 12, 8);
+    this.clock = new MyClock(this, 12);
+
+    this.time_d = new Date().getTime();
 
 	  // Materials
 
 	  this.materialDefault = new CGFappearance(this);
+
 
     this.floorAppearance = new CGFappearance(this);
     this.floorAppearance.loadTexture("../resources/images/floor.png");
@@ -91,6 +95,8 @@ LightingScene.prototype.init = function(application) {
     this.wallMaterial.setDiffuse(0.7, 0.7, 0.7, 1);
     this.wallMaterial.setSpecular(0.1, 0.1, 0.1, 1);
     this.wallMaterial.setShininess(120);
+
+    this.setUpdatePeriod(100);
 };
 
 LightingScene.prototype.initCameras = function() {
@@ -257,7 +263,20 @@ LightingScene.prototype.display = function() {
 		this.boardB.display();
 	  this.popMatrix();
 
+	  // Clock
+	  this.pushMatrix();
+		this.translate(7.25, 7.25, 0.125);
+    this.scale(0.75, 0.75, 1);
+
+		this.clock.display();
+	  this.popMatrix();
+
 	  // ---- END Primitive drawing section
 
 	  this.shader.unbind();
+};
+
+LightingScene.prototype.update = function(currTime) {
+    this.clock.update(currTime - this.time_d);
+    this.time_d = currTime;
 };
