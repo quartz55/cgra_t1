@@ -16,13 +16,20 @@ LightingScene.prototype.constructor = LightingScene;
 LightingScene.prototype.init = function(application) {
 	  CGFscene.prototype.init.call(this, application);
 
-    this.option1 = true;
-    this.option2 = false;
+    // Gui
     this.speed = 3;
+
+    this.lightSwitch0 = true;
+    this.lightSwitch1 = true;
+    this.lightSwitch2 = true;
+    this.lightSwitch3 = true;
+
+    this.Clock = true;
 
 	  this.initCameras();
 
 	  this.initLights();
+
 
 	  this.gl.clearColor(0.0, 0.0, 0.0, 1.0);
 	  this.gl.clearDepth(100.0);
@@ -147,10 +154,21 @@ LightingScene.prototype.initLights = function() {
 	  this.lights[3].setQuadraticAttenuation(1);
 	  this.lights[3].enable();
 
+
 	  this.shader.unbind();
 };
 
 LightingScene.prototype.updateLights = function() {
+
+    if(this.lightSwitch0) this.lights[0].enable();
+    else  this.lights[0].disable();
+    if(this.lightSwitch1) this.lights[1].enable();
+    else  this.lights[1].disable();
+    if(this.lightSwitch2) this.lights[2].enable();
+    else  this.lights[2].disable();
+    if(this.lightSwitch3) this.lights[3].enable();
+    else  this.lights[3].disable();
+
 	  for (i = 0; i < this.lights.length; i++)
 		    this.lights[i].update();
 }
@@ -290,7 +308,10 @@ LightingScene.prototype.display = function() {
 };
 
 LightingScene.prototype.update = function(currTime) {
-    this.clock.update(currTime - this.time_d);
+    if(this.Clock)
+    {
+        this.clock.update(currTime - this.time_d);
+    }
     this.time_d = currTime;
 };
 
