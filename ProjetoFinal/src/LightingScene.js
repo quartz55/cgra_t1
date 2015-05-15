@@ -24,7 +24,8 @@ LightingScene.prototype.init = function(application) {
     this.lightSwitch2 = true;
     this.lightSwitch3 = true;
 
-    this.Clock = true;
+    this.clockOn = true;
+    this.Clock = function(){this.clockOn = !this.clockOn;};
 
 	  this.initCameras();
 
@@ -308,7 +309,7 @@ LightingScene.prototype.display = function() {
 };
 
 LightingScene.prototype.update = function(currTime) {
-    if(this.Clock)
+    if(this.clockOn)
     {
         this.clock.update(currTime - this.time_d);
     }
