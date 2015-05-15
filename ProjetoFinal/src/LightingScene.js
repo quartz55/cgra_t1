@@ -298,7 +298,7 @@ LightingScene.prototype.display = function() {
 
     this.pushMatrix();
 
-    this.translate(7.5, 4, 7.5);
+    this.translate(7.5, 1, 7.5);
     this.robot.display();
 
     this.popMatrix();
