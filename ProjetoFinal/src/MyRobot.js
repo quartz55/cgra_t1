@@ -33,10 +33,34 @@ function MyRobot(scene) {
     this.armSize = 2;
     this.armFat = 0.3;
 
-    this.defaultAppearance = new CGFappearance(scene);
+    this.defaultAppearance = null;
 
-    this.headAppearance = new CGFappearance(scene);
-    this.headAppearance.loadTexture("../resources/images/face.png");
+    this.steelTexture = new CGFappearance(scene);
+    this.steelTexture.setDiffuse(0.5, 0.5, 0.5, 0.5);
+    this.steelTexture.setSpecular(0.8, 0.8, 0.8, 1);
+    this.steelTexture.setShininess(200);
+
+    this.blackTexture = new CGFappearance(scene);
+    this.blackTexture.setAmbient(0.1, 0.1, 0.1, 1);
+    this.blackTexture.setDiffuse(0.1, 0.1, 0.1, 1);
+    this.blackTexture.setSpecular(0.3, 0.3, 0.3, 0.5);
+    this.blackTexture.setShininess(10);
+
+    this.skinTexture = new CGFappearance(scene);
+    this.skinTexture.setAmbient(0.529, 0.403, 0.352, 1);
+    this.skinTexture.setDiffuse(0.529, 0.403, 0.352, 0.5);
+    // this.skinTexture.setAmbient(0.647, 0.494, 0.41, 1);
+    // this.skinTexture.setDiffuse(0.647, 0.494, 0.41, 0.5);
+    this.skinTexture.setSpecular(1, 1, 1, 0.1);
+    this.skinTexture.setShininess(10);
+
+    this.headAppearance0 = new CGFappearance(scene);
+    this.headAppearance0.loadTexture("../resources/images/robotFace.png");
+
+    this.headAppearance1 = new CGFappearance(scene);
+    this.headAppearance1.loadTexture("../resources/images/face.png");
+
+    this.headAppearance = null;
 };
 
 MyRobot.prototype = Object.create(CGFobject.prototype);
@@ -53,7 +77,7 @@ MyRobot.prototype.display = function () {
     this.scene.translate(this.position[0], 0, this.position[1]);
     this.scene.rotate(this.rotation*degToRad, 0, 1, 0);
 
-    this.tri.display(); //direction
+    // this.tri.display(); //direction
 
     // Robot body
     this.scene.pushMatrix();
@@ -135,4 +159,23 @@ MyRobot.prototype.rotRight = function ()
 MyRobot.prototype.rotLeft = function ()
 {
     this.rotation += 5;
+};
+
+MyRobot.prototype.changeAppearance = function(newApp)
+{
+    if(newApp == 0)
+    {
+        this.headAppearance = this.headAppearance0;
+        this.defaultAppearance = this.blackTexture;
+    }
+    else if(newApp == 1)
+    {
+        this.headAppearance = this.headAppearance1;
+        this.defaultAppearance = this.skinTexture;
+    }
+    else
+    {
+        this.headAppearance = this.headAppearance1;
+        this.defaultAppearance = this.skinTexture;
+    }
 };

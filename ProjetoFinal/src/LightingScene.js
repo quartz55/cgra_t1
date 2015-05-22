@@ -17,15 +17,24 @@ LightingScene.prototype.init = function(application) {
 	  CGFscene.prototype.init.call(this, application);
 
     // Gui
-    this.speed = 3;
+
+    this.clockOn = true;
+    this.Clock = function(){this.clockOn = !this.clockOn;};
 
     this.lightSwitch0 = true;
     this.lightSwitch1 = true;
     this.lightSwitch2 = true;
     this.lightSwitch3 = true;
 
-    this.clockOn = true;
-    this.Clock = function(){this.clockOn = !this.clockOn;};
+    this.currRobotAppearance = 0;
+
+    this.robotAppearancesList = {};
+    this.robotAppearancesList["Default"] = 0;
+    this.robotAppearancesList["Human"] = 1;
+    this.robotAppearancesList["App3"] = 2;
+
+
+    // ... end gui
 
 	  this.initCameras();
 
@@ -206,7 +215,6 @@ LightingScene.prototype.display = function() {
 
 	  // ---- END Geometric transformation section
 
-
 	  // ---- BEGIN Primitive drawing section
 
 	  // Floor
@@ -299,6 +307,7 @@ LightingScene.prototype.display = function() {
     this.pushMatrix();
 
     this.translate(7.5, 1, 7.5);
+    this.robot.changeAppearance(this.currRobotAppearance);
     this.robot.display();
 
     this.popMatrix();
@@ -314,9 +323,4 @@ LightingScene.prototype.update = function(currTime) {
         this.clock.update(currTime - this.time_d);
     }
     this.time_d = currTime;
-};
-
-LightingScene.prototype.doSomething = function()
-{
-    console.log("Doing something...");
 };

@@ -23,7 +23,9 @@ MyInterface.prototype.init = function(application) {
 
 	  this.gui = new dat.GUI();
 
-	  // add a group of controls (and open/expand by defult)
+    this.gui.add(this.scene, 'Clock');
+
+    this.gui.add(this.scene, 'currRobotAppearance', this.scene.robotAppearancesList);
 
 	  var group=this.gui.addFolder("Luzes");
 	  group.open();
@@ -33,7 +35,6 @@ MyInterface.prototype.init = function(application) {
 	  group.add(this.scene, 'lightSwitch2');
 	  group.add(this.scene, 'lightSwitch3');
 
-    this.gui.add(this.scene, 'Clock');
 
 	  return true;
 };
