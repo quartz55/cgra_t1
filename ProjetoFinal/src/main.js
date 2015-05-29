@@ -20,6 +20,7 @@ serialInclude([
     'MyFullCylinder.js',
     'MySemiCircle.js',
     'MyWheel.js',
+    'MyRobotArm.js',
 
 	  main=function() {
 		    var app = new CGFapplication(document.body);

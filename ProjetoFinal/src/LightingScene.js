@@ -33,6 +33,10 @@ LightingScene.prototype.init = function(application) {
     this.robotAppearancesList["Human"] = 1;
     this.robotAppearancesList["App3"] = 2;
 
+    this.KEY_A = false;
+    this.KEY_D = false;
+    this.KEY_W = false;
+    this.KEY_S = false;
 
     // ... end gui
 
@@ -217,6 +221,8 @@ LightingScene.prototype.display = function() {
 
 	  // ---- BEGIN Primitive drawing section
 
+    this.processInput();
+
 	  // Floor
 	  this.pushMatrix();
 		this.translate(7.5, 0, 7.5);
@@ -315,6 +321,23 @@ LightingScene.prototype.display = function() {
 	  // ---- END Primitive drawing section
 
 	  this.shader.unbind();
+};
+
+LightingScene.prototype.processInput = function()
+{
+    if (this.KEY_A) {
+        this.robot.rotLeft();
+    }
+    else if (this.KEY_D) {
+        this.robot.rotRight();
+    }
+
+    if (this.KEY_W) {
+        this.robot.speed += 0.008;
+    }
+    else if (this.KEY_S) {
+        this.robot.speed -= 0.008;
+    }
 };
 
 LightingScene.prototype.update = function(currTime) {

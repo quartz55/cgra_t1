@@ -12,11 +12,20 @@ function MyRobot(scene) {
     this.body = new MyFullCylinder(scene, 12);
     this.body.initBuffers();
 
-    this.wheel = new MyWheel(scene, 12);
-    this.wheel.initBuffers();
+    this.leftWheel = new MyWheel(scene, 12);
+    this.leftWheel.initBuffers();
 
-    this.arm = new MyFullCylinder(scene, 12);
-    this.arm.initBuffers();
+    this.rightWheel = new MyWheel(scene, 12);
+    this.rightWheel.initBuffers();
+
+    this.armSize = 2;
+    this.armFat = 0.3;
+
+    this.leftArm = new MyRobotArm(scene, this.armSize, this.armFat);
+    this.leftArm.initBuffers();
+
+    this.rightArm = new MyRobotArm(scene, this.armSize, this.armFat);
+    this.rightArm.initBuffers();
 
     this.head = new MySemiCircle(scene, 12, 30);
     this.head.initBuffers();
@@ -29,9 +38,6 @@ function MyRobot(scene) {
     this.bodyFat = 0.8;
 
     this.wheelSize = 0.25;
-
-    this.armSize = 2;
-    this.armFat = 0.3;
 
     this.defaultAppearance = null;
 
@@ -49,8 +55,6 @@ function MyRobot(scene) {
     this.skinTexture = new CGFappearance(scene);
     this.skinTexture.setAmbient(0.529, 0.403, 0.352, 1);
     this.skinTexture.setDiffuse(0.529, 0.403, 0.352, 0.5);
-    // this.skinTexture.setAmbient(0.647, 0.494, 0.41, 1);
-    // this.skinTexture.setDiffuse(0.647, 0.494, 0.41, 0.5);
     this.skinTexture.setSpecular(1, 1, 1, 0.1);
     this.skinTexture.setShininess(10);
 
@@ -77,6 +81,12 @@ MyRobot.prototype.display = function () {
     this.scene.translate(this.position[0], 0, this.position[1]);
     this.scene.rotate(this.rotation*degToRad, 0, 1, 0);
 
+    this.leftWheel.addRotation(this.speed);
+    this.rightWheel.addRotation(this.speed);
+
+    this.rightArm.addRot(this.speed/2);
+    this.leftArm.addRot(this.speed/2);
+
     // this.tri.display(); //direction
 
     // Robot body
@@ -97,7 +107,7 @@ MyRobot.prototype.display = function () {
     this.scene.translate(this.bodyFat/2+2*this.wheelSize, 0, 0);
     this.scene.rotate(Math.PI/2, 0, 1, 0);
     this.scene.scale(1, 1, this.wheelSize);
-    this.wheel.display();
+    this.leftWheel.display();
 
     this.scene.popMatrix();
 
@@ -105,9 +115,9 @@ MyRobot.prototype.display = function () {
     this.scene.pushMatrix();
 
     this.scene.translate(-(this.bodyFat/2+2*this.wheelSize), 0, 0);
-    this.scene.rotate(-Math.PI/2, 0, 1, 0);
+    this.scene.rotate(Math.PI/2, 0, 1, 0);
     this.scene.scale(1, 1, this.wheelSize);
-    this.wheel.display();
+    this.rightWheel.display();
 
     this.scene.popMatrix();
 
@@ -116,10 +126,10 @@ MyRobot.prototype.display = function () {
 
     this.scene.translate(this.bodyFat+this.armFat, this.bodySize-this.armSize/2, 0);
     this.scene.rotate(Math.PI/2, 1, 0, 0);
-    this.scene.scale(this.armFat, this.armFat, this.armSize);
+    this.scene.rotate(Math.PI, 0, 0, 1);
 
     this.defaultAppearance.apply();
-    this.arm.display();
+    this.leftArm.display();
 
     this.scene.popMatrix();
 
@@ -128,10 +138,9 @@ MyRobot.prototype.display = function () {
 
     this.scene.translate(-(this.bodyFat+this.armFat), this.bodySize-this.armSize/2, 0);
     this.scene.rotate(Math.PI/2, 1, 0, 0);
-    this.scene.scale(this.armFat, this.armFat, this.armSize);
 
     this.defaultAppearance.apply();
-    this.arm.display();
+    this.rightArm.display();
 
     this.scene.popMatrix();
 
@@ -153,12 +162,16 @@ MyRobot.prototype.display = function () {
 
 MyRobot.prototype.rotRight = function ()
 {
-    this.rotation -= 5;
+    this.rotation -= 2;
+    this.leftWheel.addRotation(0.06);
+    this.rightWheel.addRotation(-0.06);
 };
 
 MyRobot.prototype.rotLeft = function ()
 {
-    this.rotation += 5;
+    this.rotation += 2;
+    this.leftWheel.addRotation(-0.06);
+    this.rightWheel.addRotation(0.06);
 };
 
 MyRobot.prototype.changeAppearance = function(newApp)
@@ -178,4 +191,9 @@ MyRobot.prototype.changeAppearance = function(newApp)
         this.headAppearance = this.headAppearance1;
         this.defaultAppearance = this.skinTexture;
     }
+};
+
+MyRobot.prototype.startWaving = function()
+{
+    this.rightArm.startWaving();
 };

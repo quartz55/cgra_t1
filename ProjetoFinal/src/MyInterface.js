@@ -44,28 +44,46 @@ MyInterface.prototype.init = function(application) {
  * @param event {Event}
  */
 MyInterface.prototype.processKeyboard = function(event) {
-	  // call CGFinterface default code (omit if you want to override)
 	  CGFinterface.prototype.processKeyboard.call(this,event);
 
-	  // Check key codes e.g. here: http://www.asciitable.com/
-	  // or use String.fromCharCode(event.keyCode) to compare chars
+    if(event.keyCode == 111)
+        this.scene.robot.startWaving();
+};
 
-	  // for better cross-browser support, you may also check suggestions on using event.which in http://www.w3schools.com/jsref/event_key_keycode.asp
-		if(event.keyCode == 97) // a
-    {
-        this.scene.robot.rotLeft();
+MyInterface.prototype.processKeyDown = function(event) {
+	  CGFinterface.prototype.processKeyDown.call(this,event);
+
+		if(event.keyCode == 'A'.charCodeAt(0)) {
+        this.scene.KEY_A = true;
     }
-    else if(event.keyCode == 100)
-    {
-        this.scene.robot.rotRight();
+    else if(event.keyCode == 'D'.charCodeAt(0)) {
+        this.scene.KEY_D = true;
     }
 
-    if(event.keyCode == 119)
-    {
-        this.scene.robot.speed += 0.1;
+    if(event.keyCode == 'W'.charCodeAt(0)) {
+        this.scene.KEY_W = true;
     }
-    else if(event.keyCode == 115)
-    {
-        this.scene.robot.speed -= 0.1;
+    else if(event.keyCode == 'S'.charCodeAt(0)) {
+        this.scene.KEY_S = true;
     }
+
+};
+
+MyInterface.prototype.processKeyUp = function(event) {
+	  CGFinterface.prototype.processKeyUp.call(this,event);
+
+		if(event.keyCode == 'A'.charCodeAt(0)) {
+        this.scene.KEY_A = false;
+    }
+    if(event.keyCode == 'D'.charCodeAt(0)) {
+        this.scene.KEY_D = false;
+    }
+
+    if(event.keyCode == 'W'.charCodeAt(0)) {
+        this.scene.KEY_W = false;
+    }
+    if(event.keyCode == 'S'.charCodeAt(0)) {
+        this.scene.KEY_S = false;
+    }
+
 };
