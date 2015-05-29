@@ -2,6 +2,8 @@
  * MySemiCircle
  * @constructor
  */
+
+// Credits to Nuno Valente e Angela Cardoso
 function MySemiCircle(scene, slices, stacks) {
  	  CGFobject.call(this,scene);
 
@@ -64,7 +66,7 @@ MySemiCircle.prototype.initBuffers = function() {
 			      this.vertices.push(y1);
 			      this.vertices.push(z1); // vertice 1
 
-			      this.vertices.push(x2)
+			      this.vertices.push(x2);
 			      this.vertices.push(y2);
 			      this.vertices.push(z2); // vertice 2
 

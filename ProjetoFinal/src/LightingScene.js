@@ -57,8 +57,10 @@ LightingScene.prototype.init = function(application) {
 
 	  // Scene elements
 	  this.table = new MyTable(this);
+    this.windowWall = new MyWindowWall(this);
 	  this.wall = new MyQuad(this, -0.5, 1.5, -0.5, 1.5);
 	  this.floor = new MyQuad(this, 0, 10, 0, 12);
+	  this.background = new MyQuad(this);
 	  this.boardA = new Plane(this, BOARD_A_DIVISIONS);
 	  this.boardB = new Plane(this, BOARD_B_DIVISIONS);
     this.collum = new MyCylinder(this, 12, 8);
@@ -122,6 +124,9 @@ LightingScene.prototype.init = function(application) {
     this.wallMaterial.setDiffuse(0.7, 0.7, 0.7, 1);
     this.wallMaterial.setSpecular(0.1, 0.1, 0.1, 1);
     this.wallMaterial.setShininess(120);
+
+    this.backgroundAppearance = new CGFappearance(this);
+    this.backgroundAppearance.loadTexture("../resources/images/background.jpg");
 
     this.setUpdatePeriod(100);
 };
@@ -233,14 +238,23 @@ LightingScene.prototype.display = function() {
 		this.floor.display();
 	  this.popMatrix();
 
+    // Background
+	  this.pushMatrix();
+		this.translate(-30, 8, 7.5);
+		this.rotate(90 * degToRad, 0, 1, 0);
+		this.scale(128, 72, 0.2);
+
+    this.backgroundAppearance.apply();
+		this.background.display();
+	  this.popMatrix();
+
 	  // Left Wall
 	  this.pushMatrix();
 		this.translate(0, 4, 7.5);
 		this.rotate(90 * degToRad, 0, 1, 0);
-		this.scale(15, 8, 0.2);
+		this.scale(15, 8, 1);
 
-    this.windowAppearance.apply();
-		this.wall.display();
+    this.windowWall.display();
 	  this.popMatrix();
 
 	  // Plane Wall

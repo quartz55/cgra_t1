@@ -21,6 +21,7 @@ serialInclude([
     'MySemiCircle.js',
     'MyWheel.js',
     'MyRobotArm.js',
+    'MyWindowWall.js',
 
 	  main=function() {
 		    var app = new CGFapplication(document.body);
